@@ -28,8 +28,8 @@ Ein modernes und flexibles Rechnungstool zur Verwaltung von Rechnungen, Kunden u
 
 1. **Repository klonen**:
    ```bash
-   git clone https://github.com/yourusername/invoice-tool.git
-   cd invoice-tool
+   git clone https://github.com/qttx-dev/invoice.git
+   cd invoice
    ```
 
 2. **Datenbank erstellen**:
