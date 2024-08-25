@@ -1,0 +1,226 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Rechnungstool API",
+      "version": "1.0.0",
+      "description": "API für die Verwaltung von Rechnungen und Kunden"
+    },
+    "servers": [
+      {
+        "url": "http://yourdomain.com/api"
+      }
+    ],
+    "paths": {
+      "/invoices": {
+        "get": {
+          "summary": "Alle Rechnungen abrufen",
+          "responses": {
+            "200": {
+              "description": "Erfolgreiche Antwort",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Neue Rechnung erstellen",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewInvoice"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Rechnung erfolgreich erstellt",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      },
+                      "invoice_id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/invoices/{invoiceId}": {
+        "get": {
+          "summary": "Einzelne Rechnung abrufen",
+          "parameters": [
+            {
+              "name": "invoiceId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Erfolgreiche Antwort",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Invoice"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Rechnung aktualisieren",
+          "parameters": [
+            {
+              "name": "invoiceId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateInvoice"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Rechnung erfolgreich aktualisiert",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Rechnung löschen",
+          "parameters": [
+            {
+              "name": "invoiceId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Rechnung erfolgreich gelöscht",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Invoice": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "customer_id": {
+              "type": "integer"
+            },
+            "invoice_number": {
+              "type": "string"
+            },
+            "invoice_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "due_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "total_amount": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "NewInvoice": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "integer"
+            }
+          },
+          "required": ["customer_id"]
+        },
+        "UpdateInvoice": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "integer"
+            },
+            "invoice_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "due_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
